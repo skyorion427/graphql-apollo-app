@@ -14,8 +14,11 @@
     "apollo-server-express": "^2.6.7",
     "apollo-server-testing": "^2.6.7",
     "dotenv": "^8.0.0",
+    "easygraphql-tester": "^5.1.6",
     "express": "^4.17.1",
     "graphql": "^14.4.2",
+    "lodash": "^4.17.11",
+    "merge-graphql-schemas": "^1.5.8",
     "mongoose": "^5.6.3"
   }
 }
