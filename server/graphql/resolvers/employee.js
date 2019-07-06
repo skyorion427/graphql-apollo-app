@@ -2,7 +2,8 @@ const { UserInputError } = require('apollo-server-express');
 const _ = require('lodash');
 const Employee = require('../../models/employee');
 const Bank = require('../../models/bank');
-const isValidString = require('../validators');
+const { isValidString, checkConditions } = require('../validators');
+const { convertArray2Filter } = require('../utils/converter');
 
 module.exports = {
   Query: {
@@ -12,23 +13,11 @@ module.exports = {
       context,
       info,
     ) => {
-      let conditions = {};
-      if (filters) {
-        filters.map(filter => {
-          let element = {};
-          let value = {};
-          if (filter.min !== filter.max) {
-            value['$gte'] = parseInt(filter.min);
-            value['$lte'] = parseInt(filter.max);
-          } else {
-            value = filter.min;
-          }
-          element[filter.field] = value;
-          _.merge(conditions, element);
-        });
-      }
+      checkConditions(filters, err => {
+        if (err) throw new UserInputError(err);
+      });
 
-      let empQuery = Employee.find(conditions);
+      let empQuery = Employee.find(convertArray2Filter(filters));
       if (order && sort) empQuery.sort({ sort: order });
       if (limit && offset) empQuery.skip(offset).limit(limit);
 

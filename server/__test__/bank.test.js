@@ -1,67 +1,92 @@
 const chai = require('chai');
-const { ApolloServer, gql } = require('apollo-server-express');
-const { createTestClient } = require('apollo-server-testing');
-const typeDefs = require('../graphql/typeDefs');
 const expect = chai.expect;
-
-// Mocked Data
-let mockedData = [
-  { _id: 1, name: 'Bank A', branchName: 'Branch A' },
-  { _id: 2, name: 'Bank B', branchName: 'Branch B' },
-];
-
-const resolvers = {
-  Query: {
-    banks: () => {
-      return mockedData;
-    },
-  },
-  Mutation: {
-    createBank: (parent, { bank }, context, info) => {
-      const newBank = {
-        _id: mockedData.length + 1,
-        name: bank.name,
-        branchName: bank.branchName,
-      };
-      mockedData.push(newBank);
-      return newBank;
-    },
-  },
-};
-
-const server = new ApolloServer({ typeDefs, resolvers });
-const { query, mutate } = createTestClient(server);
+const url = 'http://localhost:8000';
+const request = require('supertest')(url);
 
 describe('Bank', () => {
-  it('should list banks', () => {
-    const res = query({ query: '{ banks { name branchName } }' });
-    res.then(({ data }) => {
-      expect(data).to.be.an('object');
-      expect(data).to.have.property('banks');
-    });
+  it('should list banks', done => {
+    request
+      .post('/graphql')
+      .send({ query: '{ banks { name branchName } }' })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body.data).to.be.an('object');
+        expect(res.body.data).to.have.property('banks');
+        done();
+      });
   });
 
-  it('should create a new bank', async () => {
-    const newBankData = {
-      name: 'Bank C',
-      branchName: 'Branch C',
-    };
-    const CREATE_BANK_MUTATION = gql`
-      mutation {
-        createBank(bank: { name: "Bank C", branchName: "Branch C" }) {
-          name
-          branchName
-        }
-      }
-    `;
-    const res = await mutate({
-      mutation: CREATE_BANK_MUTATION,
-    });
+  it('should create a new bank', done => {
+    request
+      .post('/graphql')
+      .send({
+        query:
+          'mutation { createBank(bank: { name: "Bank C", branchName: "Branch C" }) { name branchName } }',
+      })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body.data).to.be.an('object');
+        expect(res.body.data).to.have.property('createBank');
+        expect(res.body.data.createBank).to.have.all.keys('name', 'branchName');
+        expect(res.body.data.createBank).to.deep.equal({
+          name: 'Bank C',
+          branchName: 'Branch C',
+        });
+        done();
+      });
+  });
+});
 
-    expect(mockedData).to.have.length(3);
-    expect(mockedData).to.have.deep.include({
-      _id: mockedData.length,
-      ...newBankData,
-    });
+describe('Bank', () => {
+  let _id = '';
+
+  beforeEach(async () => {
+    const res = await request
+      .post('/graphql')
+      .send({
+        query:
+          'mutation { createBank(bank: { name: "Bank A", branchName: "Branch A" }) { _id } }',
+      })
+      .expect(200);
+    if (res.body.data.createBank && res.body.data.createBank._id)
+      _id = res.body.data.createBank._id;
+  });
+
+  it('should update a new bank', done => {
+    request
+      .post('/graphql')
+      .send({
+        query: `mutation { updateBank(_id: "${_id}", bank: { name: "Bank C", branchName: "Branch C" }) { name branchName } }`,
+      })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body.data).to.be.an('object');
+        expect(res.body.data).to.have.property('updateBank');
+        expect(res.body.data.updateBank).to.have.all.keys('name', 'branchName');
+        expect(res.body.data.updateBank).to.deep.equal({
+          name: 'Bank C',
+          branchName: 'Branch C',
+        });
+        done();
+      });
+  });
+
+  it('should delete a new bank', done => {
+    request
+      .post('/graphql')
+      .send({
+        query: `mutation { deleteBank(_id: "${_id}") { name branchName } }`,
+      })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body.data).to.be.an('object');
+        expect(res.body.data).to.have.property('deleteBank');
+        expect(res.body.data.deleteBank).to.have.all.keys('name', 'branchName');
+        done();
+      });
   });
 });

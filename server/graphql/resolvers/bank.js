@@ -1,4 +1,5 @@
 const Bank = require('../../models/bank');
+const { isValidString } = require('../validators');
 
 module.exports = {
   Query: {

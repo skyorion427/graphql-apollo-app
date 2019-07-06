@@ -9,6 +9,6 @@ let MONGO_URI = {
 };
 
 module.exports = {
-  PORT: 8080,
+  PORT: 8000,
   MONGO_URI: MONGO_URI[env],
 };

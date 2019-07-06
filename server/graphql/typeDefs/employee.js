@@ -47,8 +47,15 @@ const Employee = gql`
 
   input EmployeesInput {
     field: String
-    min: String
-    max: String
+    value: String
+    operator: Operator
+  }
+
+  enum Operator {
+    gte
+    lte
+    eq
+    like
   }
 
   enum Order {

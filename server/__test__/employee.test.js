@@ -1,125 +1,139 @@
 const chai = require('chai');
-const { ApolloServer, gql } = require('apollo-server-express');
-const { createTestClient } = require('apollo-server-testing');
-const typeDefs = require('../graphql/typeDefs');
 const expect = chai.expect;
-
-// Mocked Data
-let mockedData = [
-  {
-    _id: '1',
-    name: 'Mr. Robot',
-    number: 9818123,
-    accountHolder: 'Gregory House',
-    accountType: 'Checking',
-    accountNumber: 1231442,
-    bank: {
-      _id: 1,
-      name: 'Bank A',
-      branchName: 'Branch A',
-    },
-  },
-  {
-    _id: 2,
-    name: 'Dr. Gregory House',
-    number: 3451231,
-    accountHolder: 'Elliot Alderson',
-    accountType: 'Saving',
-    accountNumber: 9001142,
-    bank: {
-      _id: 2,
-      name: 'Bank B',
-      branchName: 'Branch B',
-    },
-  },
-];
-
-const resolvers = {
-  Query: {
-    employees: () => {
-      return mockedData;
-    },
-  },
-  Mutation: {
-    createEmployee: async (parent, { employee }, context, info) => {
-      console.log('employee');
-      const newEmployee = {
-        _id: mockedData.length + 1,
-        name: employee.name,
-        number: employee.number,
-        accountHolder: employee.accountHolder,
-        accountType: employee.accountType,
-        accountNumber: employee.accountNumber,
-        bank: {
-          _id: 3,
-          name: employee.bank.name,
-          branchName: employee.bank.branchName,
-        },
-      };
-      mockedData.push(newEmployee);
-      return newEmployee;
-    },
-  },
-};
-console.log(resolvers);
-const server = new ApolloServer({ typeDefs, resolvers });
-const { query, mutate } = createTestClient(server);
+const url = 'http://localhost:8000';
+const request = require('supertest')(url);
 
 describe('Employee', () => {
-  it('should list employees', () => {
-    const res = query({
-      query:
-        '{ employees { _id name number accountHolder accountType accountNumber } }',
-    });
-    res.then(({ data }) => {
-      expect(data).to.be.an('object');
-      expect(data).to.have.property('employees');
-    });
+  let _bankId = '';
+
+  beforeEach(async () => {
+    const res = await request
+      .post('/graphql')
+      .send({
+        query:
+          'mutation { createBank(bank: { name: "Bank A", branchName: "Branch A" }) { _id } }',
+      })
+      .expect(200);
+    if (res.body.data.createBank && res.body.data.createBank._id)
+      _bankId = res.body.data.createBank._id;
   });
 
-  it('should create a new employee', async () => {
-    const newEmployeeData = {
-      name: 'Dr. Gregory House',
-      number: '032145698701234',
-      accountHolder: 'Elliot Alderson',
-      accountType: 'Checking',
-      accountNumber: '0041189',
-      bank: {
-        _id: 1,
-        name: 'Bank A',
-        branchName: 'Branch A',
-      },
-    };
+  it('should list employees', done => {
+    request
+      .post('/graphql')
+      .send({
+        query:
+          '{ employees { _id name number accountHolder accountType accountNumber bank { name branchName } } }',
+      })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body.data).to.be.an('object');
+        expect(res.body.data).to.have.property('employees');
+        done();
+      });
+  });
 
-    const CREATE_EMPLOYEE_MUTATION = gql`
-      mutation {
-        createEmployee(
-          employee: {
-            name: "Dr. Gregory House"
-            number: "032145698701234"
-            accountHolder: "Elliot Alderson"
-            accountType: "Checking"
-            accountNumber: "0041189"
-            bank: { _id: 1, name: "Bank C", branchName: "Branch C" }
-          }
-        ) {
-          name
-          number
-          accountHolder
-          accountType
-          accountNumber
-          bank {
-            _id
-            name
-            branchName
-          }
-        }
-      }
-    `;
-    const res = await mutate({
-      mutation: CREATE_EMPLOYEE_MUTATION,
-    });
-    console.log('Hello Employee');
-    //expect(mockedData).to.have.length(3);
+  it('should create a new employee', done => {
+    request
+      .post('/graphql')
+      .send({
+        query: `mutation { createEmployee(employee: { name: "Employee X", number: 123456789, accountHolder: "Elliot Alderson", accountNumber: 9000017, bank: "${_bankId}"}) { name number accountHolder accountNumber accountType bank { name branchName } } }`,
+      })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+
+        expect(res.body.data).to.be.an('object');
+        expect(res.body.data).to.have.property('createEmployee');
+        expect(res.body.data.createEmployee).to.have.all.keys(
+          'name',
+          'number',
+          'accountHolder',
+          'accountNumber',
+          'accountType',
+          'bank',
+        );
+        expect(res.body.data.createEmployee).to.deep.equal({
+          name: 'Employee X',
+          number: 123456789,
+          accountHolder: 'Elliot Alderson',
+          accountNumber: 9000017,
+          accountType: 'Checking',
+          bank: {
+            name: 'Bank A',
+            branchName: 'Branch A',
+          },
+        });
+        done();
+      });
+  });
+});
+
+describe('Employee', () => {
+  let _bankId = '';
+  let _employeeId = '';
+
+  beforeEach(async () => {
+    const res = await request
+      .post('/graphql')
+      .send({
+        query:
+          'mutation { createBank(bank: { name: "Bank A", branchName: "Branch A" }) { _id } }',
+      })
+      .expect(200);
+
+    if (res.body.data.createBank && res.body.data.createBank._id) {
+      _bankId = res.body.data.createBank._id;
+
+      const employeeRes = await request
+        .post('/graphql')
+        .send({
+          query: `mutation { createEmployee(employee: { name: "Employee X", number: 123456789, accountHolder: "Elliot Alderson", accountNumber: 9000017, bank: "${_bankId}"}) { _id } }`,
+        })
+        .expect(200);
+
+      if (
+        employeeRes.body.data.createEmployee &&
+        employeeRes.body.data.createEmployee._id
+      )
+        _employeeId = employeeRes.body.data.createEmployee._id;
+    }
+  });
+
+  it('should update a new bank', done => {
+    request
+      .post('/graphql')
+      .send({
+        query: `mutation { updateEmployee(_id: "${_employeeId}", employee: { name: "Employee ABC", number: 987654321 }) { name number } }`,
+      })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body.data).to.be.an('object');
+        expect(res.body.data).to.have.property('updateEmployee');
+        expect(res.body.data.updateEmployee).to.have.all.keys('name', 'number');
+        expect(res.body.data.updateEmployee).to.deep.equal({
+          name: 'Employee ABC',
+          number: 987654321,
+        });
+        done();
+      });
+  });
+
+  it('should delete a new bank', done => {
+    request
+      .post('/graphql')
+      .send({
+        query: `mutation { deleteEmployee(_id: "${_employeeId}") { name number } }`,
+      })
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res.body.data).to.be.an('object');
+        expect(res.body.data).to.have.property('deleteEmployee');
+        expect(res.body.data.deleteEmployee).to.have.all.keys('name', 'number');
+        done();
+      });
   });
 });
