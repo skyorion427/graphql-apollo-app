@@ -8,7 +8,7 @@ const Employee = gql`
     accountHolder: String!
     accountType: String
     accountNumber: Int!
-    bank: Bank!
+    bank: Bank
   }
 
   type Query {
