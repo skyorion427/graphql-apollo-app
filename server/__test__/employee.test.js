@@ -5,7 +5,6 @@ const request = require('supertest')(url);
 
 describe('Employee', () => {
   let _bankId = '';
-
   beforeEach(async () => {
     const res = await request
       .post('/graphql')
@@ -43,7 +42,6 @@ describe('Employee', () => {
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-
         expect(res.body.data).to.be.an('object');
         expect(res.body.data).to.have.property('createEmployee');
         expect(res.body.data.createEmployee).to.have.all.keys(
@@ -71,9 +69,8 @@ describe('Employee', () => {
 });
 
 describe('Employee', () => {
-  let _bankId = '';
-  let _employeeId = '';
-
+  let _bankId = '',
+    _employeeId = '';
   beforeEach(async () => {
     const res = await request
       .post('/graphql')

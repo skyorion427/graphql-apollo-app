@@ -1,2 +1,0 @@
-Graphql Apollo App
-

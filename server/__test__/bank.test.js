@@ -38,10 +38,8 @@ describe('Bank', () => {
       });
   });
 });
-
 describe('Bank', () => {
   let _id = '';
-
   beforeEach(async () => {
     const res = await request
       .post('/graphql')

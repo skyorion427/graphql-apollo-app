@@ -10,16 +10,16 @@ dotenv.config();
 mongoose.connect(config.MONGO_URI, { useNewUrlParser: true });
 
 mongoose.connection.on('connected', function() {
-  console.log('Mongoose default connection open to ' + config.MONGO_URI);
+  console.log('Mongoose default connection open to ' + config.database);
 });
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
 const app = express();
-server.applyMiddleware({ app });
 
+server.applyMiddleware({ app });
 app.set('port', config.PORT);
 
 app.listen(app.get('port'), () => {
-  console.log(`Find the server at: http://localhost:${app.get('port')}/`);
+  console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console
 });
