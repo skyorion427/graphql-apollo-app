@@ -1,6 +1,6 @@
 branch-defaults:
   master:
-    environment: graphql-app
+    environment: react-apollo
 environment-defaults:
   development:
     branch: null
