@@ -1,0 +1,48 @@
+.modal-create {
+  min-width: 620px;
+}
+
+.content {
+  display: block;
+  margin: 20px 0px;
+}
+
+.employee-toolbar {
+  display: block;
+  width: 100%;
+  height: 60px;
+}
+
+.employee-toolbar .employee-create {
+  float: left;
+}
+
+.employee-toolbar .employee-sort {
+  float: right;
+}
+
+.employee-create button {
+  margin: 10px 15px 10px 0px;
+  float: left;
+}
+
+.employee-sort form {
+  margin: 6px 15px 10px 0px;
+}
+
+.employee-sortable-field {
+  width: 150px !important;
+}
+
+.form-element {
+  margin-bottom: 0;
+}
+
+.preview-field {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+.field-text {
+  color: #1890ff;
+}
