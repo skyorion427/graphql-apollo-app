@@ -1,0 +1,19 @@
+.bank-list .ant-list-items {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.bank-create {
+  display: block;
+  width: 100%;
+  height: 60px;
+}
+
+.bank-create button {
+  margin: 10px 15px 10px 0px;
+  float: left;
+}
+
+.bank-list-container {
+  margin: 0 15px 0 0;
+}

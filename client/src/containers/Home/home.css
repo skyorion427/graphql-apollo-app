@@ -1,0 +1,12 @@
+.home-container {
+  padding: 20px 20px;
+}
+
+.employee-table {
+  padding: 0 0 0 15px;
+}
+
+.language-switcher {
+  float: right;
+  display: block;
+}
