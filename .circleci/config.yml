@@ -53,7 +53,7 @@ jobs:
       # Deploy to EB
       - run:
           name: Deploy to EB
-          command: eb deploy --staged
+          command: eb deploy
 
 workflows:
   version: 2
