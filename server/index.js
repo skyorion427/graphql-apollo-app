@@ -10,7 +10,7 @@ dotenv.config();
 mongoose.connect(config.MONGO_URI, { useNewUrlParser: true });
 
 mongoose.connection.on('connected', function() {
-  console.log('Mongoose default connection open to ' + config.database);
+  console.log('Mongoose default connection open to ' + config.MONGO_URI);
 });
 
 const server = new ApolloServer({ typeDefs, resolvers });
