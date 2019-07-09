@@ -2,6 +2,9 @@
 
 Employee bank account list management webapp built with React / Apollo GraphQL
 
+- React App: https://react-app.behindbit.com
+- Graphql Explorer: https://react-app.behindbit.com/graphql
+
 ## Project Setup
 
 ### Project stack:
@@ -80,6 +83,15 @@ yarn storybook
 ## Internationalization
 
 - React-Intl
+
+## Functionalities
+
+- Create
+- Edit
+- Delete
+- Search
+- Filter in Range
+- Sort
 
 ## Code standard
 
