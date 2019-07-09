@@ -19,7 +19,7 @@ jobs:
 
       # Install dependencies and Test
       - run:
-          name: Install dependencies and start
+          name: Install dependencies and Test
           command: |
             yarn install:client
             yarn test:client:ci
@@ -28,7 +28,7 @@ jobs:
       - run:
           name: Build Client
           command: |
-            yarn client:build
+            CI="" yarn client:build
 
       # # Save Cache
       - save_cache:
