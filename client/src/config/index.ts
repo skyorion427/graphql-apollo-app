@@ -1,4 +1,4 @@
-const PRODUCTION_GRAPHQL_URI = 'https://graphql-app.behindbit.com/graphql';
+const PRODUCTION_GRAPHQL_URI = 'https://react-app.behindbit.com/graphql';
 const LOCAL_GRAPHQL_URI = 'http://192.168.1.128:8000/graphql';
 
 export const GRAPHQL_URI =
