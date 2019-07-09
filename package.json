@@ -9,8 +9,16 @@
   "scripts": {
     "start": "NODE_ENV=development node server",
     "dev": "NODE_ENV=development nodemon server",
-    "test:server": "NODE_ENV=test nodemon server",
-    "test": "mocha server/__test__/*.test.js"
+    "run:test-server": "NODE_ENV=test nodemon server",
+    "test:server": "mocha server/__test__/*.test.js",
+    "test:client": "npm run test --prefix client",
+    "test:client:ci": "npm run test:ci --prefix client",
+    "install:server": "yarn",
+    "install:client": "npm run install:packages --prefix client",
+    "client:build": "npm run build --prefix client",
+    "client:dev": "npm run dev --prefix client",
+    "storybook": "npm run storybook --prefix client",
+    "build-storybook": "npm run build-storybook --prefix client"
   },
   "dependencies": {
     "apollo-server-express": "^2.6.7",

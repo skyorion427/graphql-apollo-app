@@ -13,22 +13,28 @@ jobs:
           name: Show current branch
           command: echo ${CIRCLE_BRANCH}
       # Restore local dependencies from cache
-      # - restore_cache:
-      #     keys:
-      #       - app-dependencies-{{ checksum "package.json" }}
+      - restore_cache:
+          keys:
+            - app-dependencies-{{ checksum "client/package.json" }}
 
-      # Install dependencies and build
-      # - run:
-      #     name: Install dependencies and start
-      #     command: |
-      #       npm install --production
-      #       npm start
+      # Install dependencies and Test
+      - run:
+          name: Install dependencies and start
+          command: |
+            yarn install:client
+            yarn test:client:ci
+
+      # Build Client
+      - run:
+          name: Build Client
+          command: |
+            yarn client:build
 
       # # Save Cache
-      # - save_cache:
-      #     key: app-dependencies-{{ checksum "package.json" }}
-      #     paths:
-      #       - node_modules
+      - save_cache:
+          key: app-dependencies-{{ checksum "client/package.json" }}
+          paths:
+            - node_modules
 
       # Setup AWS CLI
       - run:
@@ -53,7 +59,10 @@ jobs:
       # Deploy to EB
       - run:
           name: Deploy to EB
-          command: eb deploy
+          command: |
+            git add .
+            git add -f ./client/build
+            eb deploy
 
 workflows:
   version: 2
