@@ -8,6 +8,7 @@ import {
   Bank as BankType,
   CreateEmployeeInput,
 } from '../../../graphql/types';
+import IntlMessage from '../../intlMessage';
 import '../employee.css';
 
 interface Props {
@@ -98,12 +99,17 @@ class CreateModal extends React.Component<Props, State> {
       return (
         <div className="bank-input-view">
           <Form>
-            <Form.Item className="form-element" label="Bank: ">
+            <Form.Item
+              className="form-element"
+              label={<IntlMessage id="employee.modal.step.bank" />}
+            >
               <Select
                 value={this.state.bank}
                 onChange={this.handleChangeValue('bank')}
               >
-                <Select.Option value="">Select Bank</Select.Option>
+                <Select.Option value="">
+                  <IntlMessage id="employee.modal.step.bank.placeholder" />
+                </Select.Option>
                 {banks &&
                   banks.map((bank: BankType, index: number) => {
                     return (
@@ -121,27 +127,40 @@ class CreateModal extends React.Component<Props, State> {
       return (
         <div className="account-input-view">
           <Form>
-            <Form.Item className="form-element" label="Account Holder's Name: ">
+            <Form.Item
+              className="form-element"
+              label={<IntlMessage id="employee.modal.step.account.holder" />}
+            >
               <Input
                 value={this.state.accountHolder}
                 onChange={this.handleChange('accountHolder')}
                 placeholder="Input account holder's name"
               />
             </Form.Item>
-            <Form.Item className="form-element" label="Account Number: ">
+            <Form.Item
+              className="form-element"
+              label={<IntlMessage id="employee.modal.step.account.number" />}
+            >
               <InputNumber
                 value={this.state.accountNumber}
                 onChange={this.handleChangeValue('accountNumber')}
                 placeholder="Input account number"
               />
             </Form.Item>
-            <Form.Item className="form-element" label="Account Type: ">
+            <Form.Item
+              className="form-element"
+              label={<IntlMessage id="employee.modal.step.account.type" />}
+            >
               <Select
                 value={this.state.accountType || 'Saving'}
                 onChange={this.handleChangeValue('accountType')}
               >
-                <Select.Option value="Saving">Saving</Select.Option>
-                <Select.Option value="Checking">Checking</Select.Option>
+                <Select.Option value="Saving">
+                  <IntlMessage id="employee.modal.step.account.type.saving" />
+                </Select.Option>
+                <Select.Option value="Checking">
+                  <IntlMessage id="employee.modal.step.account.type.checking" />
+                </Select.Option>
               </Select>
             </Form.Item>
           </Form>
@@ -151,14 +170,20 @@ class CreateModal extends React.Component<Props, State> {
       return (
         <div className="employee-input-view">
           <Form>
-            <Form.Item className="form-element" label="Employee Name: ">
+            <Form.Item
+              className="form-element"
+              label={<IntlMessage id="employee.modal.step.employee.name" />}
+            >
               <Input
                 value={this.state.name}
                 onChange={this.handleChange('name')}
                 placeholder="Input employee name"
               />
             </Form.Item>
-            <Form.Item className="form-element" label="Employee Number: ">
+            <Form.Item
+              className="form-element"
+              label={<IntlMessage id="employee.modal.step.employee.number" />}
+            >
               <InputNumber
                 value={this.state.number}
                 onChange={this.handleChangeValue('number')}
@@ -178,31 +203,45 @@ class CreateModal extends React.Component<Props, State> {
       return (
         <div className="preview-view">
           <div className="preview-field">
-            <span className="field-text">Bank Name:&nbsp;</span>
+            <span className="field-text">
+              {<IntlMessage id="employee.modal.step.bank.name" />}:&nbsp;
+            </span>
             <span className="value-text">{bankData.name || ''}</span>
           </div>
           <div className="preview-field">
-            <span className="field-text">Branch Name:&nbsp;</span>
+            <span className="field-text">
+              {<IntlMessage id="employee.modal.step.bank.branch" />}:&nbsp;
+            </span>
             <span className="value-text">{bankData.branchName || ''}</span>
           </div>
           <div className="preview-field">
-            <span className="field-text">Account Holder:&nbsp;</span>
+            <span className="field-text">
+              {<IntlMessage id="employee.modal.step.account.holder" />}:&nbsp;
+            </span>
             <span className="value-text">{this.state.accountHolder}</span>
           </div>
           <div className="preview-field">
-            <span className="field-text">Account Number:&nbsp;</span>
+            <span className="field-text">
+              {<IntlMessage id="employee.modal.step.account.number" />}:&nbsp;
+            </span>
             <span className="value-text">{this.state.accountNumber}</span>
           </div>
           <div className="preview-field">
-            <span className="field-text">Account Type:&nbsp;</span>
+            <span className="field-text">
+              {<IntlMessage id="employee.modal.step.account.type" />}:&nbsp;
+            </span>
             <span className="value-text">{this.state.accountType}</span>
           </div>
           <div className="preview-field">
-            <span className="field-text">Employee Name:&nbsp;</span>
+            <span className="field-text">
+              {<IntlMessage id="employee.modal.step.employee.name" />}:&nbsp;
+            </span>
             <span className="value-text">{this.state.name}</span>
           </div>
           <div className="preview-field">
-            <span className="field-text">Employee Number:&nbsp;</span>
+            <span className="field-text">
+              {<IntlMessage id="employee.modal.step.employee.number" />}:&nbsp;
+            </span>
             <span className="value-text">{this.state.number}</span>
           </div>
         </div>
@@ -212,29 +251,36 @@ class CreateModal extends React.Component<Props, State> {
 
   render() {
     const { visible } = this.props;
-    const btnText = this.state.curStep === 3 ? 'Save' : 'Next';
+
+    const btnText = this.state.curStep === 3 ? 'btn.save' : 'btn.next';
 
     return (
       <Modal
         className="modal-create"
-        title="Edit Bank Information"
+        title={<IntlMessage id="employee.modal.title" />}
         visible={visible}
         onOk={this.handleSave}
         onCancel={this.handleClose}
         footer={[
           <Button key="next" type="primary" onClick={this.handleNext}>
-            {btnText}
+            <IntlMessage id={btnText} />
           </Button>,
           <Button key="cancel" onClick={this.handleClose}>
-            Cancel
+            <IntlMessage id="btn.cancel" />
           </Button>,
         ]}
       >
         <Steps current={this.state.curStep}>
-          <Steps.Step title="Bank" />
-          <Steps.Step title="Account" />
-          <Steps.Step title="Employee" />
-          <Steps.Step title="Confirm" />
+          <Steps.Step title={<IntlMessage id="employee.modal.step.bank" />} />
+          <Steps.Step
+            title={<IntlMessage id="employee.modal.step.account" />}
+          />
+          <Steps.Step
+            title={<IntlMessage id="employee.modal.step.employee" />}
+          />
+          <Steps.Step
+            title={<IntlMessage id="employee.modal.step.confirm" />}
+          />
         </Steps>
         <div className="content">{this.renderView()}</div>
       </Modal>

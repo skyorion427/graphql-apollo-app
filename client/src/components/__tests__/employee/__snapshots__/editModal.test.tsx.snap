@@ -1,0 +1,249 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Employee Edit Modal renders component 1`] = `
+<Modal
+  confirmLoading={false}
+  maskTransitionName="fade"
+  okType="primary"
+  onCancel={[Function]}
+  onOk={[Function]}
+  title={
+    <InjectIntl(InjectMassage)
+      id="employee.modal.edit.title"
+    />
+  }
+  transitionName="zoom"
+  visible={true}
+  width={520}
+>
+  <Form
+    colon={true}
+    hideRequiredMark={false}
+    layout="horizontal"
+    onSubmit={[Function]}
+  >
+    <FormItem
+      className="form-element"
+      hasFeedback={false}
+      label={
+        <InjectIntl(InjectMassage)
+          id="employee.modal.step.employee.name"
+        />
+      }
+    >
+      <Input
+        defaultValue="Employee A"
+        disabled={false}
+        onChange={[Function]}
+        placeholder="input name"
+        type="text"
+      />
+    </FormItem>
+    <FormItem
+      className="form-element"
+      hasFeedback={false}
+      label={
+        <InjectIntl(InjectMassage)
+          id="employee.modal.step.employee.number"
+        />
+      }
+    >
+      <InputNumber
+        defaultValue={1234567}
+        onChange={[Function]}
+        placeholder="input number"
+        step={1}
+      />
+    </FormItem>
+    <FormItem
+      className="form-element"
+      hasFeedback={false}
+      label={
+        <InjectIntl(InjectMassage)
+          id="employee.modal.step.account.holder"
+        />
+      }
+    >
+      <Input
+        defaultValue="Holder A"
+        disabled={false}
+        onChange={[Function]}
+        placeholder="input account holder"
+        type="text"
+      />
+    </FormItem>
+    <FormItem
+      className="form-element"
+      hasFeedback={false}
+      label={
+        <InjectIntl(InjectMassage)
+          id="employee.modal.step.account.type"
+        />
+      }
+    >
+      <Select
+        choiceTransitionName="zoom"
+        defaultValue="Checking"
+        onChange={[Function]}
+        showSearch={false}
+        transitionName="slide-up"
+      >
+        <Option
+          value="Saving"
+        >
+          <InjectIntl(InjectMassage)
+            id="employee.modal.step.account.type.saving"
+          />
+        </Option>
+        <Option
+          value="Checking"
+        >
+          <InjectIntl(InjectMassage)
+            id="employee.modal.step.account.type.checking"
+          />
+        </Option>
+      </Select>
+    </FormItem>
+    <FormItem
+      className="form-element"
+      hasFeedback={false}
+      label={
+        <InjectIntl(InjectMassage)
+          id="employee.modal.step.account.number"
+        />
+      }
+    >
+      <InputNumber
+        defaultValue={7654321}
+        onChange={[Function]}
+        placeholder="input account number"
+        step={1}
+      />
+    </FormItem>
+  </Form>
+</Modal>
+`;
+
+exports[`Employee Edit Modal renders component and props 1`] = `
+<Modal
+  confirmLoading={false}
+  maskTransitionName="fade"
+  okType="primary"
+  onCancel={[Function]}
+  onOk={[Function]}
+  title={
+    <InjectIntl(InjectMassage)
+      id="employee.modal.edit.title"
+    />
+  }
+  transitionName="zoom"
+  visible={true}
+  width={520}
+>
+  <Form
+    colon={true}
+    hideRequiredMark={false}
+    layout="horizontal"
+    onSubmit={[Function]}
+  >
+    <FormItem
+      className="form-element"
+      hasFeedback={false}
+      label={
+        <InjectIntl(InjectMassage)
+          id="employee.modal.step.employee.name"
+        />
+      }
+    >
+      <Input
+        defaultValue="Employee A"
+        disabled={false}
+        onChange={[Function]}
+        placeholder="input name"
+        type="text"
+      />
+    </FormItem>
+    <FormItem
+      className="form-element"
+      hasFeedback={false}
+      label={
+        <InjectIntl(InjectMassage)
+          id="employee.modal.step.employee.number"
+        />
+      }
+    >
+      <InputNumber
+        defaultValue={1234567}
+        onChange={[Function]}
+        placeholder="input number"
+        step={1}
+      />
+    </FormItem>
+    <FormItem
+      className="form-element"
+      hasFeedback={false}
+      label={
+        <InjectIntl(InjectMassage)
+          id="employee.modal.step.account.holder"
+        />
+      }
+    >
+      <Input
+        defaultValue="Holder A"
+        disabled={false}
+        onChange={[Function]}
+        placeholder="input account holder"
+        type="text"
+      />
+    </FormItem>
+    <FormItem
+      className="form-element"
+      hasFeedback={false}
+      label={
+        <InjectIntl(InjectMassage)
+          id="employee.modal.step.account.type"
+        />
+      }
+    >
+      <Select
+        choiceTransitionName="zoom"
+        defaultValue="Checking"
+        onChange={[Function]}
+        showSearch={false}
+        transitionName="slide-up"
+      >
+        <Option
+          value="Saving"
+        >
+          <InjectIntl(InjectMassage)
+            id="employee.modal.step.account.type.saving"
+          />
+        </Option>
+        <Option
+          value="Checking"
+        >
+          <InjectIntl(InjectMassage)
+            id="employee.modal.step.account.type.checking"
+          />
+        </Option>
+      </Select>
+    </FormItem>
+    <FormItem
+      className="form-element"
+      hasFeedback={false}
+      label={
+        <InjectIntl(InjectMassage)
+          id="employee.modal.step.account.number"
+        />
+      }
+    >
+      <InputNumber
+        defaultValue={7654321}
+        onChange={[Function]}
+        placeholder="input account number"
+        step={1}
+      />
+    </FormItem>
+  </Form>
+</Modal>
+`;

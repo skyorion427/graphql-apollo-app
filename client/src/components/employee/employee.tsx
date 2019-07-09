@@ -30,6 +30,7 @@ import {
 } from '../../graphql/types';
 import { GET_EMPLOYEE_QUERY } from '../../graphql/gql/employee';
 
+import IntlMessage from '../intlMessage';
 import { columns, sortableFields } from './config';
 import './employee.css';
 
@@ -415,10 +416,12 @@ class EmployeeComponent extends React.Component<Props, State> {
     };
 
     const actionCol = {
-      title: 'Edit',
+      title: <IntlMessage id="btn.edit" />,
       render: (text: string, record: EmployeeType) => (
         <span>
-          <a onClick={this.handleOpenEdit(record)}>Edit</a>
+          <a onClick={this.handleOpenEdit(record)}>
+            <IntlMessage id="btn.edit" />
+          </a>
         </span>
       ),
     };
@@ -427,7 +430,6 @@ class EmployeeComponent extends React.Component<Props, State> {
       onChange: this.handleChangeSelection,
     };
 
-    console.log(variables);
     return (
       <Query<any, QueryEmployeesArgs>
         query={GET_EMPLOYEE_QUERY}
@@ -441,26 +443,30 @@ class EmployeeComponent extends React.Component<Props, State> {
               <div className="employee-toolbar">
                 <div className="employee-create">
                   <Button onClick={this.handleOpenCreateModal} type="primary">
-                    Create New Employee
+                    <IntlMessage id="employee.btn.create" />
                   </Button>
                   <Button
                     type="default"
                     onClick={this.handleOpenDelete}
                     disabled={selectedRowKeys.length === 0}
                   >
-                    Delete
+                    <IntlMessage id="btn.delete" />
                   </Button>
                 </div>
                 <div className="employee-sort">
                   <Form layout="inline">
-                    <Form.Item>Sort:</Form.Item>
+                    <Form.Item>
+                      <IntlMessage id="btn.sort" />
+                    </Form.Item>
                     <Form.Item>
                       <Select
                         className="employee-sortable-field"
                         value={this.state.sort}
                         onChange={this.handleChangeValue('sort')}
                       >
-                        <Select.Option value="">Select Field</Select.Option>
+                        <Select.Option value="">
+                          <IntlMessage id="btn.sort.field.placeholder" />
+                        </Select.Option>
                         {sortableFields.map(col => (
                           <Select.Option value={col.dataIndex}>
                             {col.title}
@@ -468,7 +474,9 @@ class EmployeeComponent extends React.Component<Props, State> {
                         ))}
                       </Select>
                     </Form.Item>
-                    <Form.Item>By</Form.Item>
+                    <Form.Item>
+                      <IntlMessage id="btn.sort.by" />
+                    </Form.Item>
                     <Form.Item>
                       <Select
                         value={this.state.order}

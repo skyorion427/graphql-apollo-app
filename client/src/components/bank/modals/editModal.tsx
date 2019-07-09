@@ -2,6 +2,8 @@ import React from 'react';
 import { Modal, Form, Input, Button } from 'antd';
 
 import { Bank, UpdateBankInput } from '../../../graphql/types';
+import IntlMessage from '../../intlMessage';
+import '../bank.css';
 
 interface ModalProps {
   visible: boolean;
@@ -26,7 +28,7 @@ class EditModal extends React.Component<ModalProps, ModalState> {
       this.setState({
         name: this.props.item.name,
         branchName: this.props.item.branchName,
-      })
+      });
     }
   }
 
@@ -61,21 +63,21 @@ class EditModal extends React.Component<ModalProps, ModalState> {
 
     return (
       <Modal
-        title="Edit Bank Information"
+        title={<IntlMessage id="bank.modal.edit.title" />}
         visible={visible}
         okText="Save"
         onOk={this.handleSave}
         onCancel={this.handleClose}
       >
         <Form layout="horizontal">
-          <Form.Item label="Bank Name: ">
+          <Form.Item label={<IntlMessage id="bank.modal.name" />}>
             <Input
               defaultValue={name}
               onChange={this.handleChangeName}
               placeholder="input bank name"
             />
           </Form.Item>
-          <Form.Item label="Branch: ">
+          <Form.Item label={<IntlMessage id="bank.modal.branch" />}>
             <Input
               defaultValue={branchName}
               onChange={this.handleChangeBranch}

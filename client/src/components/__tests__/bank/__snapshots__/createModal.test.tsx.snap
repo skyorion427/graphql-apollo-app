@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Bank Create Modal renders component 1`] = `
+<Modal
+  confirmLoading={false}
+  maskTransitionName="fade"
+  okText="Save"
+  okType="primary"
+  onCancel={[Function]}
+  onOk={[Function]}
+  title={
+    <InjectIntl(InjectMassage)
+      id="bank.modal.edit.title"
+    />
+  }
+  transitionName="zoom"
+  visible={true}
+  width={520}
+>
+  <Form
+    colon={true}
+    hideRequiredMark={false}
+    layout="horizontal"
+    onSubmit={[Function]}
+  >
+    <FormItem
+      hasFeedback={false}
+      label={
+        <InjectIntl(InjectMassage)
+          id="bank.modal.name"
+        />
+      }
+    >
+      <Input
+        defaultValue="Bank A"
+        disabled={false}
+        onChange={[Function]}
+        placeholder="input bank name"
+        type="text"
+      />
+    </FormItem>
+    <FormItem
+      hasFeedback={false}
+      label={
+        <InjectIntl(InjectMassage)
+          id="bank.modal.branch"
+        />
+      }
+    >
+      <Input
+        defaultValue="Branch A"
+        disabled={false}
+        onChange={[Function]}
+        placeholder="input branch"
+        type="text"
+      />
+    </FormItem>
+  </Form>
+</Modal>
+`;

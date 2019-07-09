@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { shallowToJson } from 'enzyme-to-json';
 import { IntlProvider } from 'react-intl';
 
-import IntlMessage from '../intlMessage';
+import IntlMessage from '../../intlMessage';
 
 describe('<IntlMessage />', () => {
   it('renders component', () => {

@@ -5,6 +5,8 @@ import {
   Employee as EmployeeType,
   UpdateEmployeeInput,
 } from '../../../graphql/types';
+import IntlMessage from '../../intlMessage';
+import '../employee.css';
 
 interface ModalProps {
   visible: boolean;
@@ -91,43 +93,62 @@ class EditModal extends React.Component<ModalProps, ModalState> {
 
     return (
       <Modal
-        title="Edit Employee Information"
+        title={<IntlMessage id="employee.modal.edit.title" />}
         visible={visible}
         onOk={this.handleSave}
         onCancel={this.handleClose}
       >
-        <Form layout="inline">
-          <Form.Item label="Name: ">
+        <Form>
+          <Form.Item
+            className="form-element"
+            label={<IntlMessage id="employee.modal.step.employee.name" />}
+          >
             <Input
               defaultValue={name}
               onChange={this.handleChange('name')}
               placeholder="input name"
             />
           </Form.Item>
-          <Form.Item label="Number: ">
+          <Form.Item
+            className="form-element"
+            label={<IntlMessage id="employee.modal.step.employee.number" />}
+          >
             <InputNumber
               defaultValue={number}
               onChange={this.handleChangeValue('number')}
               placeholder="input number"
             />
           </Form.Item>
-          <Form.Item label="Account Holder: ">
+          <Form.Item
+            className="form-element"
+            label={<IntlMessage id="employee.modal.step.account.holder" />}
+          >
             <Input
               defaultValue={accountHolder}
               onChange={this.handleChange('accountHolder')}
               placeholder="input account holder"
             />
           </Form.Item>
-          <Form.Item label="Account Type: ">
+          <Form.Item
+            className="form-element"
+            label={<IntlMessage id="employee.modal.step.account.type" />}
+          >
             <Select
               defaultValue={accountType || 'Saving'}
               onChange={this.handleChangeValue('accountType')}
             >
-              <Select.Option value="Saving">Saving</Select.Option>
-              <Select.Option value="Checking">Checking</Select.Option>
+              <Select.Option value="Saving">
+                <IntlMessage id="employee.modal.step.account.type.saving" />
+              </Select.Option>
+              <Select.Option value="Checking">
+                <IntlMessage id="employee.modal.step.account.type.checking" />
+              </Select.Option>
             </Select>
           </Form.Item>
-          <Form.Item label="Account Number: ">
+          <Form.Item
+            className="form-element"
+            label={<IntlMessage id="employee.modal.step.account.number" />}
+          >
             <InputNumber
               defaultValue={accountNumber}
               onChange={this.handleChangeValue('accountNumber')}

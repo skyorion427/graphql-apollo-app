@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, Form, Input, Button } from 'antd';
 
 import { CreateBankInput } from '../../../graphql/types';
+import IntlMessage from '../../intlMessage';
 
 interface Props {
   visible: boolean;
@@ -50,21 +51,22 @@ class CreateModal extends React.Component<Props, State> {
 
     return (
       <Modal
-        title="Create Bank Information"
+        title={<IntlMessage id="bank.modal.title" />}
         visible={visible}
-        okText="Create"
+        okText={<IntlMessage id="btn.create" />}
+        cancelText={<IntlMessage id="btn.cancel" />}
         onOk={this.handleSave}
         onCancel={this.handleClose}
       >
         <Form layout="horizontal">
-          <Form.Item label="Bank Name: ">
+          <Form.Item label={<IntlMessage id="bank.modal.name" />}>
             <Input
               value={this.state.name}
               onChange={this.handleChangeName}
               placeholder="input bank name"
             />
           </Form.Item>
-          <Form.Item label="Branch: ">
+          <Form.Item label={<IntlMessage id="bank.modal.branch" />}>
             <Input
               value={this.state.branchName}
               onChange={this.handleChangeBranch}

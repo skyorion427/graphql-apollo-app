@@ -15,6 +15,7 @@ import {
   CreateBankInput,
   UpdateBankInput,
 } from '../../graphql/types';
+import IntlMessage from '../intlMessage';
 import { columns } from './config';
 import './bank.css';
 
@@ -131,10 +132,12 @@ class BankComponent extends React.Component<Props, State> {
     const { data } = this.props;
     const { selectedRowKeys } = this.state;
     const actionCol = {
-      title: 'Edit',
+      title: <IntlMessage id="btn.edit" />,
       render: (text: string, record: BankType) => (
         <span>
-          <a onClick={this.handleOpenEdit(record)}>Edit</a>
+          <a onClick={this.handleOpenEdit(record)}>
+            <IntlMessage id="btn.edit" />
+          </a>
         </span>
       ),
     };
@@ -147,14 +150,14 @@ class BankComponent extends React.Component<Props, State> {
       <div className="bank-container">
         <div className="bank-create">
           <Button onClick={this.handleShowCreateModal} type="primary">
-            Create Bank
+            <IntlMessage id="bank.btn.create" />
           </Button>
           <Button
             type="default"
             onClick={this.handleOpenDelete}
             disabled={selectedRowKeys.length === 0}
           >
-            Delete
+            <IntlMessage id="btn.delete" />
           </Button>
         </div>
         <div className="bank-list-container">
