@@ -62,7 +62,7 @@ jobs:
           command: |
             git add .
             git add -f ./client/build
-            eb deploy
+            eb deploy --staged
 
 workflows:
   version: 2
