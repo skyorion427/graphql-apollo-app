@@ -7,10 +7,10 @@ const resolvers = require('./graphql/resolvers');
 const config = require('./config');
 dotenv.config();
 
-mongoose.connect('mongodb+srv://chris:chris1010@graphql-app-db-zvzll.mongodb.net/graphql-db', { useNewUrlParser: true });
+mongoose.connect(config.MONGO_URI, { useNewUrlParser: true });
 
 mongoose.connection.on('connected', function() {
-  // console.log('Mongoose default connection open to ' + config.MONGO_URI);
+  console.log('Mongoose default connection open to ' + config.MONGO_URI);
 });
 
 const server = new ApolloServer({ typeDefs, resolvers });
