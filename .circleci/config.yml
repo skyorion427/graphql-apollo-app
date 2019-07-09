@@ -18,11 +18,11 @@ jobs:
       #       - app-dependencies-{{ checksum "package.json" }}
 
       # Install dependencies and build
-      - run:
-          name: Install dependencies and start
-          command: |
-            npm install --production
-            npm start
+      # - run:
+      #     name: Install dependencies and start
+      #     command: |
+      #       npm install --production
+      #       npm start
 
       # # Save Cache
       # - save_cache:

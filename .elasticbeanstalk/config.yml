@@ -1,8 +1,8 @@
 branch-defaults:
   master:
-    environment: react-apollo
+    environment: react-app
 environment-defaults:
-  react-apollo:
+  development:
     branch: null
     repository: null
 global:
