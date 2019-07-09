@@ -12,7 +12,7 @@ const LanguageSwitcher = ({
   const { language, switchLanguage } = appContext;
 
   return (
-    <div>
+    <div className="language-switcher">
       <Radio.Group defaultValue={language} buttonStyle="solid">
         {config.options.map(option => {
           const { languageId, locale, text } = option;

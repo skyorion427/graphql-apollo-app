@@ -1,8 +1,20 @@
 import gql from 'graphql-tag';
 
 export const GET_EMPLOYEE_QUERY = gql`
-  query {
-    employees {
+  query getEmployee(
+    $filters: [EmployeesInput]
+    $limit: Int
+    $offset: Int
+    $order: Order
+    $sort: String
+  ) {
+    employees(
+      filters: $filters
+      limit: $limit
+      offset: $offset
+      order: $order
+      sort: $sort
+    ) {
       _id
       name
       number
