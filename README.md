@@ -106,7 +106,6 @@ yarn storybook
 
 ## Authors
 
-- **Chris Yu**
 
 ## License
 
